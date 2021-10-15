@@ -17,7 +17,8 @@ runs:
 
     - name: Restore dependencies
       run: dotnet restore
+      shell: bash
 
     - name: Set version
       run: echo "::set-output name=buildVersion::0.${{github.run_id}}.0"
-
+      shell: bash
