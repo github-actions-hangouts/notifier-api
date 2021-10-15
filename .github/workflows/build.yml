@@ -19,7 +19,7 @@ jobs:
       id: getRepoName
       run: echo "::set-output name=repoName::`echo ${{github.repository}}| awk -F'/' '{print $2}'`"
 
-    -name: Echo repo name
+    - name: Echo repo name
       run: echo "${{steps.getRepoName.outputs.repoName}}"
 
 
