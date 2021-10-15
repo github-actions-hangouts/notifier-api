@@ -5,7 +5,7 @@ inputs:
     description: 'Desired dotnet version to setup'
     required: true
 outputs:
-  buildVersion: {steps.serVersion.outputs.buildVersion}
+  buildVersion: ${{steps.setVersion.outputs.buildVersion}}
     description: 'Build version that will be used by the application'
 runs:
   using: 'composite'
