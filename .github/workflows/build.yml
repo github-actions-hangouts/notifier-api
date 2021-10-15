@@ -34,10 +34,10 @@ jobs:
         dotNetVersion: 5.0.x      
 
     - name: Publish
-      run: dotnet publish --no-restore /p:Version=${{steps.setup.outputs.buildVersion}} --output ./publish --configuration Release
+      run: dotnet publish --no-restore /p:Version=${{steps.setup.outputs.version}} --output ./publish --configuration Release
 
     - name: Push Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{needs.get-repoName.outputs.repoName}}.${{steps.setup.outputs.buildVersion}}
+        name: ${{needs.get-repoName.outputs.repoName}}.${{steps.setup.outputs.version}}
         path: ./publish
