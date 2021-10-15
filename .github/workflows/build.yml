@@ -36,7 +36,7 @@ jobs:
       with:
         dotNetVersion: 5.0.x      
 
-    -name: Echo version name
+    - name: Echo version name
       run: echo "${{steps.setup.outputs.version}}"
 
     - name: Publish
