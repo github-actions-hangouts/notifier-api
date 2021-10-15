@@ -22,10 +22,10 @@ jobs:
       run: dotnet restore
 
     - name: Test
-      run: dotnet test --logger "junit;LogFilePath=testResults.xml"
+      run: dotnet test --no-restore --logger "junit;LogFilePath=testResults.xml"
 
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
-      if: github.event_name == 'pull_request'
+      if: always() && github.event_name == 'pull_request'
       with:
-        files: test/**/*.xml
+        files: tests/**/*.xml

@@ -1,0 +1,43 @@
+name: Build-Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  get-repoName:
+    runs-on: ubuntu-latest
+
+    outputs:
+      repoName: ${{ steps.getRepoName.outputs.repoName}}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get Repo Name
+      id: getRepoName
+      run: echo "::set-output name=repoName::`echo ${{github.repository}}| awk -F'/' '{print $2}'`"
+
+
+  build:
+    needs: get-repoName
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup DotNet Action
+      id: setup
+      uses: ./.github/actions/dotnet-setup
+      with:
+        dotNetVersion: 5.0.x
+
+    - name: Publish
+      run: dotnet publish --no-restore /p:Version=${{steps.setup.outputs.buildVersion}} --output ./publish --configuration Release
+
+    - name: Push Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{needs.get-repoName.outputs.repoName}}.${{steps.setup.outputs.buildVersion}}
+        path: ./publish

@@ -1,0 +1,23 @@
+name: 'Dotnet Setup'
+description: 'Setups the desired dotnet version, restores the project and returns the build version'
+inputs:
+  dotNetVersion:
+    description: 'Desired dotnet version to setup'
+    required: true
+outputs:
+  buildVersion:
+    description: 'Build version that will be used by the application'
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{inputs.dotNetVersion}}
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Set version
+      run: echo "::set-output name=buildVersion::0.${{github.run_id}}.0"
+
