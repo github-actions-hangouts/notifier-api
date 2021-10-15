@@ -23,3 +23,7 @@ runs:
       id: setVersion
       run: echo "::set-output name=version::0.${{github.run_number}}.0"
       shell: bash
+
+    - name: Echo version
+      run: echo "${{steps.setVersion.outputs.version}}"
+      shell: bash

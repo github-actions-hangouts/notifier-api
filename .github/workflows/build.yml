@@ -19,6 +19,9 @@ jobs:
       id: getRepoName
       run: echo "::set-output name=repoName::`echo ${{github.repository}}| awk -F'/' '{print $2}'`"
 
+    -name: Echo repo name
+      run: echo "${{steps.getRepoName.outputs.repoName}}"
+
 
   build:
     needs: get-repoName
@@ -33,8 +36,11 @@ jobs:
       with:
         dotNetVersion: 5.0.x      
 
+    -name: Echo version name
+      run: echo "${{steps.setup.outputs.version}}"
+
     - name: Publish
-      run: dotnet publish --no-restore /p:Version=${{steps.setup.outputs.version}} --output ./publish --configuration Release
+      run: dotnet publish --no-restore --output ./publish --configuration Release
 
     - name: Push Artifacts
       uses: actions/upload-artifact@v2
