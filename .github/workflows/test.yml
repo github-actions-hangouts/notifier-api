@@ -1,21 +1,31 @@
 name: Test-Pipeline
 
 on:
+  workflow_dispatch:
   pull_request:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Test
-      run: dotnet test --verbosity normal
+      run: dotnet test --logger "junit;LogFilePath=testResults.xml"
+
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: github.event_name = 'pull_request'
+      with:
+        files: test/**/*.xml
