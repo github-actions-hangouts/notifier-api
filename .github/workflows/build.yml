@@ -31,7 +31,7 @@ jobs:
       id: setup
       uses: ./.github/actions/dotnet-setup
       with:
-        dotNetVersion: 5.0.x
+        dotNetVersion: 5.0.x      
 
     - name: Publish
       run: dotnet publish --no-restore /p:Version=${{steps.setup.outputs.buildVersion}} --output ./publish --configuration Release

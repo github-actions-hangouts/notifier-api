@@ -5,7 +5,7 @@ inputs:
     description: 'Desired dotnet version to setup'
     required: true
 outputs:
-  buildVersion:
+  buildVersion: {steps.serVersion.outputs.buildVersion}
     description: 'Build version that will be used by the application'
 runs:
   using: 'composite'
@@ -20,5 +20,6 @@ runs:
       shell: bash
 
     - name: Set version
-      run: echo "::set-output name=buildVersion::0.${{github.run_id}}.0"
+      id: setVersion
+      run: echo "::set-output name=buildVersion::0.${{github.run_number}}.0"
       shell: bash
