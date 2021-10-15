@@ -38,6 +38,7 @@ namespace Notifier.Services.UnitTests
         [Theory]
         [InlineData("message1,message2", 2)]
         [InlineData("message1,message2,message3,message4", 4)]
+        [InlineData("message1", 2)]
         public void OnPublish_WhenMoreThanOneMessage_ShouldPublishAllMessages(string messages, int messageCount)
         {
             //arrange
