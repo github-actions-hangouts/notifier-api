@@ -13,7 +13,7 @@ async def dispose():
     await nc.close()
 
 async def sendRequests(topic, message):
-    await nc.connect("nats://localhost:4222", loop=loop)
+    await nc.connect("nats://172.17.0.1:4222", loop=loop)
     await nc.subscribe(topic, cb=message_handler)
     await asyncio.sleep(5)
 
