@@ -45,7 +45,7 @@ jobs:
       shell: pwsh
 
     - name: Run NATS test action
-      uses: ./.github/actions/dotnet-setup
+      uses: ./.github/actions/nats-test
       with:
         topic: ${{github.event.inputs.topic}}
         message: ${{github.event.inputs.message}}     
