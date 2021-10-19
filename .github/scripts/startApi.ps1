@@ -9,5 +9,5 @@ param (
 $ErrorActionPreference = "Stop"
 
 $Env:ASPNETCORE_URLS="http://0.0.0.0:5000/"
-$api = Get-ChildItem $BasePath\app | Where Name -match "$ApiName.dll"
+$api = Get-ChildItem $BasePath/app | Where Name -match "$ApiName.dll"
 dotnet $api.FullName
