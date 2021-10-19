@@ -35,9 +35,10 @@ jobs:
 
     - name: Download artifact
       uses: dawidd6/action-download-artifact@v2
-      workflow: build.yml
-      workflow_conclusion: success
-      path: app
+      with:
+        workflow: build.yml
+        workflow_conclusion: success
+        path: app
 
     - name: Start API
       run: Start-Process nohup 'pwsh ${{github.workspace}}/.github/scripts/startApi.ps1 ${{github.workspace}} ${{env.apiName}}'
