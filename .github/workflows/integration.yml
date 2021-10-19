@@ -19,6 +19,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      nats:
+        image: nats:alpine
+        ports:        
+        - 4222:4222
+
     steps:
     - uses: actions/checkout@v2
 
