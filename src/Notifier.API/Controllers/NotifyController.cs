@@ -21,8 +21,7 @@ namespace Notifier.API.Controllers
         public IActionResult Publish(string topic, string messages)
         {
             _logger.LogInformation($"Publishing messages on the following topic: {topic}");
-            _logger.LogInformation($"Publishing messages on the following topic: {topic}");
-
+            
             _notifierService.Publish(topic, messages);
 
             return Ok("Messages published!");

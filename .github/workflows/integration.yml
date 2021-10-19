@@ -1,0 +1,46 @@
+name: Integration-Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+        topic:
+          description: 'Topic'
+          required: true
+          default: 'names'
+        message:
+          description: 'Messages'
+          required: true
+          default: 'Zavala,Ikora,Lord Shaxx'
+
+jobs:
+  integration:
+    env:
+      apiName: Notifier.API
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Download artifact
+      uses: dawidd6/action-download-artifact@v2
+      workflow: build.yml
+      workflow_conclusion: success
+      path: app
+
+    - name: Start API
+      run: Start-Process nohup 'pwsh ${{github.workspace}}/.github/scripts/startApi.ps1 ${{github.workspace}} ${{env.apiName}}'
+      shell: pwsh
+
+    - name: Run NATS test action
+      uses: ./.github/actions/dotnet-setup
+      with:
+        topic: ${{github.event.inputs.topic}}
+        message: ${{github.event.inputs.message}}     
+
+
