@@ -41,7 +41,7 @@ jobs:
         path: app
 
     - name: Start API
-      run: Start-Process nohup 'pwsh ${{github.workspace}}/.github/scripts/startApi.ps1 ${{env.apiName}}'
+      run: Start-Process nohup 'pwsh ${{github.workspace}}/.github/scripts/startApi.ps1 ${{github.workspace}} ${{env.apiName}}'
       shell: pwsh
 
     - name: Run NATS test action
