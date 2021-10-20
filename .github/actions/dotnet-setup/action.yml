@@ -4,6 +4,9 @@ inputs:
   dotNetVersion:
     description: 'Desired dotnet version to setup'
     required: true
+  buildNumber:
+    description: 'Build number that will be used to generate the version number'
+    required: true
 outputs:
   version:
     description: 'Build version that will be used by the application'
@@ -22,5 +25,5 @@ runs:
 
     - name: Set version
       id: setVersion
-      run: echo "::set-output name=version::0.${{github.run_number}}.0"
+      run: echo "::set-output name=version::0.${{inputs.buildNumber}}.0"
       shell: bash

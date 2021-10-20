@@ -22,9 +22,25 @@ jobs:
     - name: Echo repo name
       run: echo "${{steps.getRepoName.outputs.repoName}}"
 
+  get-buildNumber:
+    runs-on: ubuntu-latest
+
+    outputs:
+      repoName: ${{ steps.getBuildNumber.outputs.buildNumber}}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get Build Number
+      id: getBuildNumber
+      run: echo "::set-output name=buildNumber::${{github.run_number}}"
+
+    - name: Echo build number
+      run: echo "${{steps.getBuildNumber.outputs.buildNumber}}"
+
 
   build:
-    needs: get-repoName
+    needs: [get-repoName, get-buildNumber]
     runs-on: ubuntu-latest
 
     steps:
