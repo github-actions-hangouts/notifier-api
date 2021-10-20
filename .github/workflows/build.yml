@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      repoName: ${{ steps.getBuildNumber.outputs.buildNumber}}
+      buildNumber: ${{ steps.getBuildNumber.outputs.buildNumber}}
 
     steps:
     - uses: actions/checkout@v2
@@ -50,7 +50,8 @@ jobs:
       id: setup
       uses: ./.github/actions/dotnet-setup
       with:
-        dotNetVersion: 5.0.x      
+        dotNetVersion: 5.0.x
+        buildNumber: ${{needs.get-buildNumber.outputs.buildNumber}}    
 
     - name: Echo version name
       run: echo "${{steps.setup.outputs.version}}"
