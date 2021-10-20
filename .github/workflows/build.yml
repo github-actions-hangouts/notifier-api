@@ -13,8 +13,6 @@ jobs:
       repoName: ${{ steps.getRepoName.outputs.repoName}}
 
     steps:
-    - uses: actions/checkout@v2
-
     - name: Get Repo Name
       id: getRepoName
       run: echo "::set-output name=repoName::`echo ${{github.repository}}| awk -F'/' '{print $2}'`"
@@ -29,8 +27,6 @@ jobs:
       buildNumber: ${{ steps.getBuildNumber.outputs.buildNumber}}
 
     steps:
-    - uses: actions/checkout@v2
-
     - name: Get Build Number
       id: getBuildNumber
       run: echo "::set-output name=buildNumber::${{github.run_number}}"
